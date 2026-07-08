@@ -1,9 +1,9 @@
 package entities;
 
-abstract class Money  {
-   protected int amount;
+class Money  {
+   private int amount;
    
-   protected String currency;
+   private String currency;
    
    public Money(int amount, String currency) {
       this.amount = amount;
@@ -11,14 +11,16 @@ abstract class Money  {
    }
    
    static Money dollar(int amount)  {
-      return new Dollar(amount, "USD");
+      return new Money(amount, "USD");
    }
    
    static Money franc(int amount) {
-	   return new Franc(amount, "CHF");
+	   return new Money(amount, "CHF");
    }
    
-   abstract Money times(int multiplier); 
+   Money times(int multiplier) {
+      return new Money(amount * multiplier, currency);
+   }
    
    public int getAmount() {
 	   return amount;
@@ -28,8 +30,8 @@ abstract class Money  {
 	   return currency;
    }
    
-   public boolean equals(Object object)  {
+   public boolean equals(Object object) {
       Money money = (Money) object;
-      return amount == money.amount && getClass().equals(money.getClass());
-   }   
+      return amount == money.amount && getCurrency().equals(money.getCurrency());
+   }
 }
